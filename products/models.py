@@ -16,6 +16,14 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def category_name(self):
+        return self.category
+
+    @property
+    def category_by_name(self):
+        return self.category
+
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='product-images')
