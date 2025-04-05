@@ -17,3 +17,6 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ['id', 'name', 'description', 'parent', 'parent_name', 'image', 'products', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at', 'products']
+
+    def get_products_count(self, obj):
+        return obj.products.count()
