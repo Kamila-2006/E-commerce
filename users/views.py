@@ -33,7 +33,7 @@ class UserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, username):
-        user = get_object_or_404(User, pk=pk)
+        user = get_object_or_404(CustomUser, pk=id)
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
