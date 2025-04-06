@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
-from .models import CustomUser
+from django.contrib.auth.models import User
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -8,14 +8,13 @@ class RegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
-        model = CustomUser
-        fields = ('id', 'username', 'password', 'password2', 'email', 'first_name', 'last_name', 'phone', 'address', 'created_at', 'updated_at')
+        model = User
+        fields = ('id', 'username', 'password', 'password2', 'email', 'first_name', 'last_name')
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True},
             'email': {'required': True}
         }
-        read_only_fields = ('id', 'created_at', 'updated_at')
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -25,7 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         password = validated_data.pop('password')
         validated_data.pop('password2')
-        user = CustomUser.objects.create(**validated_data)
+        user = User.objects.create(**validated_data)
 
         user.set_password(password)
         user.save()
@@ -35,8 +34,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'phone', 'address']
+        model = User
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
 
         extra_kwargs = {
             'username': {'read_only': True},

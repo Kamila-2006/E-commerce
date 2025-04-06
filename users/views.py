@@ -5,13 +5,13 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from .models import CustomUser
+from django.contrib.auth.models import User
 from .serializers import RegisterSerializer, UserSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
 class RegisterView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     serializer_class = RegisterSerializer
 
 class LogoutView(APIView):
@@ -33,7 +33,7 @@ class UserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, username):
-        user = get_object_or_404(CustomUser, username=username)
+        user = get_object_or_404(User, username=username)
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
