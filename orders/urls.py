@@ -8,4 +8,5 @@ router.register(r'orders', views.OrderViewSet, basename='orders')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('dashboard/stats/', views.DashboardStatsView.as_view(), name='dashboard'),
 ]
