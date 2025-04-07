@@ -55,7 +55,7 @@ class DashboardStatsView(APIView):
             recent_orders_data.append({
                 "id": order.id,
                 "customer": order.customer.id,
-                "customer_username": order.customer.username,
+                "customer_username": order.customer.user.username,
                 "status": order.status,
                 "total_price": str(order.total_price),
                 "shipping_address": order.shipping_address,
